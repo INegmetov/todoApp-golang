@@ -7,6 +7,11 @@ import (
 	"github.com/inegmetov/todoApp-golang"
 )
 
+type SignInInput struct {
+	Username string `json: "username" binding: "required"`
+	Password string `json: "password" binding: "required"`
+}
+
 func (h *Handler) signUp(c *gin.Context) {
 	var input todoApp.User
 
@@ -24,11 +29,6 @@ func (h *Handler) signUp(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
-}
-
-type SignInInput struct {
-	Username string `json: "username" binding: "required"`
-	Password string `json: "password" binding: "required"`
 }
 
 func (h *Handler) signIn(c *gin.Context) {

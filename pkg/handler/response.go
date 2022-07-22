@@ -5,11 +5,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type Error struct {
+type errorRosponse struct {
 	Message string `json:"message"`
 }
 
 func newErrorResponse(c *gin.Context, statusCode int, message string) {
 	logrus.Error()
-	c.AbortWithStatusJSON(statusCode, Error{message})
+	c.AbortWithStatusJSON(statusCode, errorRosponse{message})
 }
