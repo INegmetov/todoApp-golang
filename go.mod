@@ -46,7 +46,7 @@ require (
 	github.com/spf13/viper v1.12.0 // indirect
 	github.com/subosito/gotenv v1.4.0 // indirect
 	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe // indirect
-	github.com/swaggo/gin-swagger v1.5.1 // indirect
+	github.com/swaggo/gin-swagger v1.3.2 // indirect
 	github.com/swaggo/swag v1.8.4 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	github.com/urfave/cli/v2 v2.11.1 // indirect
