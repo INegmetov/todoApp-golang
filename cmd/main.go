@@ -1,7 +1,10 @@
 package main
 
 import (
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/inegmetov/todoApp-golang"
 	"github.com/inegmetov/todoApp-golang/pkg/handler"
@@ -41,10 +44,24 @@ func main() {
 	service := service.NewService(repos)
 	handlers := handler.NewHandler(service)
 	srv := new(todoApp.Server)
-	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+	go func() {
+		if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			logrus.Fatal("error occurred while running the server: %s", err.Error())
+		}
+	}()
+	logrus.Print("Todo app Started")
 
-		logrus.Fatal("error occurred while running the server: %s", err.Error())
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	if err := srv.Shoutdown(context.Background()); err != nil {
+		logrus.Errorf("error occurred on server shutting down: %s", err.Error())
 	}
+	if err := db.Close(); err != nil {
+		logrus.Errorf("error occurred on db connection close: %s", err.Error())
+	}
+
 }
 
 func initConfig() error {

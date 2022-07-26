@@ -81,12 +81,12 @@ func (h *Handler) updateList(c *gin.Context) {
 		return
 	}
 
-	var input todoApp.UpdateInputList
+	var input todoApp.UpdateListInput
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
-	if err := h.service.Update(userId, id, input); err != nil {
+	if err := h.service.TodoList.Update(userId, id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
